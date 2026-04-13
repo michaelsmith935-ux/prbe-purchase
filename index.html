@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRBE - Purchase License</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --primary-light: #2980b9;
+            --accent: #27ae60;
+            --accent-hover: #219a52;
+            --bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #5d6d7e;
+            --border: #dce1e8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Steps Section */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .step-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border-top: 4px solid var(--primary-light);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .step-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* Purchase Card */
+        .purchase-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .purchase-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+        }
+
+        .purchase-header h2 {
+            font-size: 1.4rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .price {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .purchase-body {
+            padding: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .features-list li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+        }
+
+        .form-hint {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 0.3rem;
+        }
+
+        .buy-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .buy-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .buy-button:active {
+            transform: translateY(0);
+        }
+
+        .buy-button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .secure-note {
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 1rem;
+        }
+
+        .secure-note svg {
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 2rem;
+        }
+
+        .info-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.25rem;
+        }
+
+        .faq-item strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .faq-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Machine ID highlight box */
+        .machine-id-help {
+            background: #eaf2f8;
+            border-left: 4px solid var(--primary-light);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+            font-size: 0.92rem;
+            color: var(--text);
+        }
+
+        .machine-id-help strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.6rem; }
+            .price { font-size: 2.2rem; }
+            .purchase-body { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>PRBE Application Tool</h1>
+    <p>Probabilistic Risk-Based Estimating &mdash; Improving the reliability of project estimates one analysis at a time</p>
+</header>
+
+<div class="container">
+
+    <!-- How It Works -->
+    <h2 style="text-align:center; margin-bottom:1.25rem; color:var(--primary);">How to Get Your License</h2>
+    <div class="steps">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Download &amp; Install</h3>
+            <p>Download the free demo from <a href="https://github.com/michaelsmith935-ux/PRBE" target="_blank" rel="noopener">GitHub</a>. Install and run it to view your unique Machine ID.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Purchase a License</h3>
+            <p>Enter your Machine ID and email below, then complete payment securely through Stripe.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Receive Your License</h3>
+            <p>After payment is confirmed, a license key tied to your machine will be emailed to you.</p>
+        </div>
+    </div>
+
+    <!-- Purchase Card -->
+    <div class="purchase-card">
+        <div class="purchase-header">
+            <h2>PRBE Full License</h2>
+            <div class="price">$29.99</div>
+            <div class="price-note">One-time payment &bull; Lifetime license</div>
+        </div>
+        <div class="purchase-body">
+            <ul class="features-list">
+                <li>Full Monte Carlo simulation engine</li>
+                <li>Unlimited cost &amp; schedule risk analyses</li>
+                <li>Distribution curves &amp; tornado diagrams</li>
+                <li>Lifetime updates &amp; email support</li>
+            </ul>
+
+            <div class="machine-id-help">
+                <strong>Where do I find my Machine ID?</strong>
+                Open the PRBE demo application. Your Machine ID is displayed on the startup screen under "License Information."
+            </div>
+
+            <form id="purchaseForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                    <div class="form-hint">Your license key will be sent to this address.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="machineId">Machine ID</label>
+                    <input type="text" id="machineId" name="machineId" placeholder="e.g. A1B2-C3D4-E5F6-7890" required>
+                    <div class="form-hint">Copy this exactly from the PRBE demo application.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="John Smith" required>
+                </div>
+
+                <!--
+                    ============================================================
+                    STRIPE INTEGRATION — CHOOSE ONE OPTION BELOW
+                    ============================================================
+
+                    OPTION A  (Recommended — No Code):
+                    Use a Stripe Payment Link. Replace the button's onclick
+                    with a redirect to your Stripe Payment Link URL.
+
+                    OPTION B  (Advanced):
+                    Use Stripe Checkout with a server-side endpoint.
+                    See the setup-instructions.md file for details.
+                    ============================================================
+                -->
+
+                <button type="submit" class="buy-button" id="buyBtn">
+                    Purchase License &mdash; $29.99
+                </button>
+            </form>
+
+            <p class="secure-note">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C8.676 1 6 3.676 6 7v2H4v14h16V9h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg>
+                Payments are processed securely by <strong>Stripe</strong>. We never store your card details.
+            </p>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="info-section">
+        <h3>Frequently Asked Questions</h3>
+
+        <div class="faq-item">
+            <strong>How long does it take to receive my license?</strong>
+            <p>Licenses are typically delivered within 24 hours of confirmed payment. You will receive an email with your license key and activation instructions.</p>
+        </div>
+
+        <div class="faq-item">
+            <strong>Can I transfer my license to another computer?</strong>
+            <p>Each license is tied to a specific Machine ID. If you need to move to a new computer, contact us and we will issue a replacement license at no charge.</p>
+        </div>
+
+        <div class="faq-item">
+            <strong>What if I need help with the application?</strong>
+            <p>Visit our <a href="https://sites.google.com/view/contactprbe/home" target="_blank" rel="noopener">main website</a> for tutorial videos, examples, and contact information.</p>
+        </div>
+
+        <div class="faq-item">
+            <strong>Is there a refund policy?</strong>
+            <p>If you experience any issues with the software, please contact us within 30 days of purchase for a full refund.</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 PRBE &mdash; Probabilistic Risk-Based Estimating</p>
+    <p style="margin-top:0.5rem;">
+        <a href="https://sites.google.com/view/contactprbe/home" target="_blank">Main Website</a>
+        &nbsp;&bull;&nbsp;
+        <a href="https://github.com/michaelsmith935-ux/PRBE" target="_blank">GitHub</a>
+    </p>
+</footer>
+
+<script>
+    // ============================================================
+    // STRIPE PAYMENT LINK INTEGRATION
+    // ============================================================
+    //
+    // Replace YOUR_STRIPE_PAYMENT_LINK_URL below with your actual
+    // Stripe Payment Link URL from the Stripe Dashboard.
+    //
+    // Example: https://buy.stripe.com/live_abc123xyz
+    //
+    // The form data (email, machineId, name) is passed to Stripe
+    // via URL parameters so you can see them in your dashboard.
+    // ============================================================
+
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/fZu8wR1S5fPSb9Oeiy2Fa00';
+
+    document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value.trim();
+        const machineId = document.getElementById('machineId').value.trim();
+        const fullName = document.getElementById('fullName').value.trim();
+
+        if (!email || !machineId || !fullName) {
+            alert('Please fill in all fields before proceeding.');
+            return;
+        }
+
+        // Validate email format
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Build the Stripe Payment Link URL with prefilled email
+        // The machine ID will be collected via Stripe's custom field
+        const paymentUrl = STRIPE_PAYMENT_LINK
+            + '?prefilled_email=' + encodeURIComponent(email)
+            + '&client_reference_id=' + encodeURIComponent(machineId);
+
+        // Store info locally so the success page can reference it
+        try {
+            sessionStorage.setItem('prbe_name', fullName);
+            sessionStorage.setItem('prbe_email', email);
+            sessionStorage.setItem('prbe_machine_id', machineId);
+        } catch(e) {
+            // sessionStorage may not be available in all contexts
+        }
+
+        // Redirect to Stripe Checkout
+        window.location.href = paymentUrl;
+    });
+</script>
+
+</body>
+</html>
